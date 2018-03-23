@@ -1,19 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html ng-app="toDoApp" ng-controller="toDoController">
-  <head>
-    <title>App de tarefas</title>
-    <script src="angular.js"></script>
-    <style>
-      body {
-        color: #000;
-        font-size: 14px;
-        font-family: "Roboto", sans-serif;
-        padding: 20px;
-      }
-      h3 {
-        margin-top: 0px;
-      }
-      a {
+<title>App de tarefas</title>
+<head>
+<script src="angular.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+}
+
+/* Create a Parallax Effect */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.bgimg-1 {
+    background-image: url('https://www.w3schools.com/w3images/parallax1.jpg');
+    min-height: 100%;
+}
+
+/* Second image (Portfolio) */
+.bgimg-2 {
+    background-image: url("https://www.w3schools.com/w3images/parallax2.jpg");
+    min-height: 400px;
+}
+
+/* Third image (Contact) */
+.bgimg-3 {
+    background-image: url("https://www.w3schools.com/w3images/parallax3.jpg");
+    min-height: 400px;
+}
+
+.w3-wide {letter-spacing: 10px;}
+.w3-hover-opacity {cursor: pointer;}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: scroll;
+    }
+}
+	a {
         color: #444;
         text-decoration: none;
       }
@@ -27,25 +66,127 @@
       
       .complete {		
         text-decoration: line-through;
-        color: #F00;
+        color: #000;
+        transition: all linear 0.5s;
+		background-color: lightcoral ;
+		height: 20px;
+		width: 100%;
+		position: relative;
+		top: 0;
+		left: 0;
       }
-    </style>
-  </head>
-  <body>
-    <h1>Minha To-do List</h1>
-    <h2>Tarefas</h2>
-      <table>
+      
+      .task {
+	  transition: all linear 0.5s;
+	  background-color: lightblue;
+	  height: 20px;
+	  width: 100%;
+	  position: relative;
+	  top: 0;
+	  left: 0;
+	  }
+
+	  .ng-hide {
+	  height: 0;
+	  width: 0;
+	  background-color: transparent;
+	  top:-200px;
+	  left: 200px;
+	  }
+</style>
+
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+<body ng-app="myApp">
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar" id="myNavbar">
+    <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a href="#home" class="w3-bar-item w3-button"><i class="fas fa-home"></i>Início</a>
+    <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fab fa-angular"></i>Sobre a ferramenta</a>
+    <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fas fa-list-ul"></i> Ferramenta</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> Contato</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
+      <i class="fa fa-search"></i>
+    </a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+    <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
+    <a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">PORTFOLIO</a>
+    <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
+    <a href="#" class="w3-bar-item w3-button">SEARCH</a>
+  </div>
+</div>
+
+<!-- First Parallax Image with Logo Text -->
+<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+  <div class="w3-display-middle" style="white-space:nowrap;">
+    <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Meu <span class="w3-hide-small">App</span> Angular/Rails</span>
+  </div>
+</div>
+
+<!-- Container (About Section) -->
+<div class="w3-content w3-container w3-padding-64" id="about">
+  <h3 class="w3-center">Sobre a ferramenta</h3>
+  <p class="w3-center"><em>To do List</em></p>
+  <p>Na hora de gerenciar pequenas e médias empresas, é natural que, de vez em quando, o empreendedor se depare com o acúmulo natural de tarefas 
+  dentro da organização. Com tantas pendências, as chances de erro aumentam e o rendimento do negócio pode ser prejudicado. Para otimizar o 
+  tempo e a divisão das funções, uma alternativa são as ferramentas to do list.Mas você sabe o que isso significa? Em tradução livre, 
+  to do list trata-se de uma lista de tarefas “a fazer”. Nela, estarão listadas as principais atividades que você ainda tem para executar. 
+  Atualmente, smartphones e tablets possuem muitos aplicativos diferentes com esse tipo de organizador, que oferecem múltiplas funções, 
+  além das mais convencionais.</p>
+  <div class="w3-row">
+    <div class="w3-col m6 w3-center w3-padding-large">
+      <p><b><i class="fas fa-list-ul w3-margin-right"></i></b></p><br>
+      <img src="/assets/to-do-list.jpeg" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Me" width="500" height="333">
+    </div>
+
+    <!-- Hide this text on small devices -->
+    <div class="w3-col m6 w3-hide-small w3-padding-large">
+      <p>As tarefas devem ser separadas a fim de proporcionar uma maior uma agilidade na resolução do processo geral. Portanto, 
+      não simplifique em uma grande tarefa aquilo que você pode elencar partes sequenciais, pois acaba sendo intimidador. Um dos melhores 
+      exemplos é, sem dúvida, a “operação” de arrumar a casa. Seja tal apontamento feito em um post-it ou em um aplicativo para smartphone, 
+      ele tem a capacidade de desanimar muitas pessoas a realizá-lo. Para isso, divida em pequenas sub-tarefas a serem cumpridas separadamente, 
+      como por exemplo:</p>
+	<ul>
+	<li>Arrumar a cama</li>
+	<li>Varrer o quarto</li>
+	<li>Recolher as roupas do varal</li>
+    <li>Lavar a louça</li>
+    </ul>
+    <p>Com objetivos menores, torna-se mais fácil o aproveitamento do dia a dia.</p>
+    </div>
+  </div>
+  
+
+<!-- Second Parallax Image with Portfolio Text -->
+<div class="bgimg-2 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle">
+    <span class="w3-xxlarge w3-text-white w3-wide">PORTFOLIO</span>
+  </div>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div class="w3-content w3-container w3-padding-64" id="portfolio">
+  <h3 class="w3-center">Ferramenta</h3>
+  <table>
         <tr><td>
           <h3>Ativos ({{ tasks.length }})</h3>
             <span ng-hide="tasks.length">Você não tem tarefas ativas!</span>
-            <div ng-repeat="task in tasks">
-              <input type="checkbox" ng-click="transferTo($index, tasks, completed)" /> {{ task }}<br />
+            <div class="task" ng-repeat="task in tasks">
+              <input type="checkbox" ng-click="transferTo($index, tasks, completed)"/>{{ task }}<br />
             </div>
         </td><td>
-          <div ng-show="completed.length">
-            <h3>Completo ({{ completed.length }})</h3>
-              <div ng-repeat="task in completed">
-                <input type="checkbox" ng-click="transferTo($index, completed, tasks)" checked /> <span class="complete">{{ task }}</span><br />
+          <h3>Completo ({{ completed.length }})</h3>
+          <span ng-hide="completed.length">Você não tem tarefas completas!</span>
+          <div ng-show="completed.length">            
+              <div class="complete" ng-repeat="task in completed">
+                <input type="checkbox" ng-click="transferTo($index, completed, tasks)" checked /> {{ task }}<br />
               </div>
           </div>
         </td></tr>
@@ -56,6 +197,7 @@
         <input type="text" placeholder="Descrição" ng-model="newTaskName" />
         <input type="submit" value="Adicionar" />
       </form>
+    
     <script>
       angular.module('toDoApp', [])
         .controller('toDoController', ['$scope', function($scope) {
@@ -76,6 +218,108 @@
           }
         }]);
     </script>
-   
-  </body>
+
+<!-- Container (Contact Section) -->
+<div class="w3-content w3-container w3-padding-64" id="contact">
+  <h3 class="w3-center">WHERE I WORK</h3>
+  <p class="w3-center"><em>I'd love your feedback!</em></p>
+
+  <div class="w3-row w3-padding-32 w3-section">
+    <div class="w3-col m4 w3-container">
+      <!-- Add Google Maps -->
+      <div id="googleMap" class="w3-round-large w3-greyscale" style="width:100%;height:400px;"></div>
+    </div>
+    <div class="w3-col m8 w3-panel">
+      <div class="w3-large w3-margin-bottom">
+        <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Chicago, US<br>
+        <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +00 151515<br>
+        <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@mail.com<br>
+      </div>
+      <p>Swing by for a cup of <i class="fa fa-coffee"></i>, or leave me a note:</p>
+      <form action="https://www.w3schools.com/action_page.php" target="_blank">
+        <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
+          <div class="w3-half">
+            <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+          </div>
+          <div class="w3-half">
+            <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
+          </div>
+        </div>
+        <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+        <button class="w3-button w3-black w3-right w3-section" type="submit">
+          <i class="fa fa-paper-plane"></i> SEND MESSAGE
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+  <div class="w3-xlarge w3-section">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+ 
+<!-- Add Google Maps -->
+<script>
+function myMap()
+{
+  myCenter=new google.maps.LatLng(41.878114, -87.629798);
+  var mapOptions= {
+    center:myCenter,
+    zoom:12, scrollwheel: false, draggable: false,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  var map=new google.maps.Map(document.getElementById("googleMap"),mapOptions);
+
+  var marker = new google.maps.Marker({
+    position: myCenter,
+  });
+  marker.setMap(map);
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+
+// Change style of navbar on scroll
+window.onscroll = function() {myFunction()};
+function myFunction() {
+    var navbar = document.getElementById("myNavbar");
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
+    } else {
+        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
+    }
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function toggleFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
+<!--
+To use this code on your website, get a free API key from Google.
+Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+-->
+
+</body>
 </html>
