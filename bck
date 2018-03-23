@@ -18,14 +18,12 @@
         text-decoration: none;
       }
       td {
-		
         min-width: 300px;
         padding-left: 20px;
         padding-right: 20px;
         vertical-align: top;
       }
-      
-      .complete {		
+      .complete {
         text-decoration: line-through;
         color: #F00;
       }
@@ -52,7 +50,8 @@
       </table>
     <h2>Adicione uma tarefa</h2>
       <form ng-submit="addTask()">
-		
+		<input type="text" placeholder="Pessoa" ng-model="user" />
+        <input type="submit" value="Adicionar" />
         <input type="text" placeholder="Descrição" ng-model="newTaskName" />
         <input type="submit" value="Adicionar" />
       </form>
